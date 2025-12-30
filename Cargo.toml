@@ -1,0 +1,3 @@
+[workspace]
+members = ["hive-cli", "hive-codegen"]
+resolver = "2"
