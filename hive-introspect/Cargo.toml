@@ -1,0 +1,9 @@
+[package]
+name = "hive-introspect"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+hive-schema = {path = "../hive-schema"}
+sqlx = { version = "0.8.6", features = ["postgres", "runtime-tokio-native-tls", "macros"] }

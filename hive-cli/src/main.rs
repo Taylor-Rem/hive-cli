@@ -1,5 +1,8 @@
+mod codegen;
+mod introspect;
+mod migrate;
+
 use clap::{Parser, Subcommand};
-use hive_codegen;
 
 #[derive(Parser)]
 #[command(name = "hive")]
@@ -10,20 +13,22 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Commands {
-    Codegen {
+    Introspect {
         #[arg(short, long)]
-        name: Option<String>,
-    },
+        connect: Option<String>,
+        #[arg(short, long, default_value = "./schema/schema.toml")]
+        output: String,
+    }
 }
 
-fn main() {
+async fn main() {
     let cli = Cli::parse();
 
     match cli.command { 
-        Commands::Codegen { name } => {
-            match name {
-                Some(n) => hive_codegen::greet(&n),
-                None => hive_codegen::greet("Alice"),
+        Commands::Introspect { connect, output } => {
+            match connect {
+                Some(c) => introspect::run(&c, &output).await,
+                None => introspect::run("todo", &output),
             }
         }
     }
