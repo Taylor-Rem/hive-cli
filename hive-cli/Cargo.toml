@@ -14,5 +14,3 @@ clap = { version = "4.4", features = ["derive"] }
 hive-db = { path = "../hive-db" }
 hive-introspect = { path = "../hive-introspect" }
 hive-schema = { path = "../hive-schema" }
-hive-codegen = { path = "../hive-codegen" }
-hive-migrate = { path = "../hive-migrate" }

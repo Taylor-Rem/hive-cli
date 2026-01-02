@@ -551,7 +551,9 @@ name = "hive-cli"
 version = "0.1.0"
 dependencies = [
  "clap",
- "hive-codegen",
+ "hive-db",
+ "hive-introspect",
+ "hive-schema",
 ]
 
 [[package]]
@@ -559,7 +561,23 @@ name = "hive-codegen"
 version = "0.1.0"
 
 [[package]]
+name = "hive-db"
+version = "0.1.0"
+dependencies = [
+ "sqlx",
+]
+
+[[package]]
 name = "hive-introspect"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "hive-schema",
+ "sqlx",
+]
+
+[[package]]
+name = "hive-migrate"
 version = "0.1.0"
 dependencies = [
  "anyhow",

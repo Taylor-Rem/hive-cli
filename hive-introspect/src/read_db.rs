@@ -1,4 +1,4 @@
-use crate::db::connect::DbState;
+use crate::db::connect::DbPool;
 use std::collections::HashMap;
 use anyhow::Result;
 use sqlx::Row;
@@ -11,7 +11,7 @@ use hive_schema::{
     DbIndex
 };
 
-pub async fn read_db_schema(db: &DbState) -> Result<DbSchema> {
+pub async fn read_db_schema(db: &DbPool) -> Result<DbSchema> {
     // Step 1: Get all columns
     let column_rows = sqlx::query(
         r#"

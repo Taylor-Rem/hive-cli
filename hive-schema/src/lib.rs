@@ -1,2 +1,2 @@
 pub mod structs;
-pub mod write_schema;
+mod write_schema;

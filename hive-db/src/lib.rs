@@ -1,1 +1,3 @@
-pub mod connect;
+mod connect;
+
+pub use connect::{connect, DbPool};

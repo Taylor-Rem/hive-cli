@@ -1,6 +1,4 @@
-mod codegen;
 mod introspect;
-mod migrate;
 
 use clap::{Parser, Subcommand};
 
