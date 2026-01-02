@@ -18,15 +18,23 @@ enum Commands {
         output: String,
     }
 }
-
+#[tokio::main]
 async fn main() {
     let cli = Cli::parse();
 
     match cli.command { 
         Commands::Introspect { connect, output } => {
-            match connect {
+            let result = match connect {
                 Some(c) => introspect::run(&c, &output).await,
-                None => introspect::run("todo", &output),
+                None => {
+                    eprintln!("Error: --connect argument is required");
+                    std::process::exit(1);
+                }
+            };
+            
+            if let Err(e) = result {
+                eprintln!("Error: {}", e);
+                std::process::exit(1);
             }
         }
     }

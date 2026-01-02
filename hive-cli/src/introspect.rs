@@ -14,7 +14,7 @@ pub async fn run(database_url: &str, output_path: &str) -> Result<()> {
     println!("Writing schema to {}...", output_path);
     
     // Step 3: Write the schema to a TOML file (using hive-schema)
-    hive_schema::write_toml(&schema, output_path)?;
+    hive_schema::write_schema_toml(schema, output_path)?;
     
     println!("✓ Schema file generated successfully!");
     

@@ -1,7 +1,6 @@
-use crate::db::connect::DbPool;
 use std::collections::HashMap;
 use anyhow::Result;
-use sqlx::Row;
+use sqlx::{PgPool, Row};
 
 use hive_schema::{
     DbSchema,
@@ -11,7 +10,7 @@ use hive_schema::{
     DbIndex
 };
 
-pub async fn read_db_schema(db: &DbPool) -> Result<DbSchema> {
+pub async fn read_db_schema(db: &PgPool) -> Result<DbSchema> {
     // Step 1: Get all columns
     let column_rows = sqlx::query(
         r#"
@@ -26,7 +25,7 @@ pub async fn read_db_schema(db: &DbPool) -> Result<DbSchema> {
         ORDER BY table_name, ordinal_position
         "#
     )
-    .fetch_all(&db.pool)
+    .fetch_all(db)  // Changed from db.pool to db
     .await?;
 
     let mut tables: HashMap<String, DbTable> = HashMap::new();
@@ -70,7 +69,7 @@ pub async fn read_db_schema(db: &DbPool) -> Result<DbSchema> {
         ORDER BY tc.table_name, kcu.column_name
         "#
     )
-    .fetch_all(&db.pool)
+    .fetch_all(db)  // Changed from db.pool to db
     .await?;
 
     for row in fk_rows {
@@ -105,7 +104,7 @@ pub async fn read_db_schema(db: &DbPool) -> Result<DbSchema> {
         ORDER BY t.relname, i.relname, a.attnum
         "#
     )
-    .fetch_all(&db.pool)
+    .fetch_all(db)  // Changed from db.pool to db
     .await?;
 
     // Group index columns by index name

@@ -8,7 +8,9 @@ name = "hive"
 path = "src/main.rs"
 
 [dependencies]
+anyhow = "1.0"
 clap = { version = "4.4", features = ["derive"] }
+tokio = { version = "1.48", features = ["full"] }
 
 # crates
 hive-db = { path = "../hive-db" }
