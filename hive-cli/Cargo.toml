@@ -1,7 +1,8 @@
 [package]
 name = "hive-cli"
+description = "Command line interface for hive"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [[bin]]
 name = "hive"

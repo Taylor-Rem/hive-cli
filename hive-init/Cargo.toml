@@ -1,6 +1,6 @@
 [package]
-name = "hive-migrate"
-description = "Reads schema from toml and applies changes to the database"
+name = "hive-init"
+description = "Initializes hive project. Creates directory that hive expects"
 version = "0.1.0"
 edition = "2024"
 
