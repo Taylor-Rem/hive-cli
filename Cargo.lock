@@ -553,6 +553,7 @@ dependencies = [
  "anyhow",
  "clap",
  "hive-db",
+ "hive-init",
  "hive-introspect",
  "hive-schema",
  "tokio",
@@ -569,6 +570,13 @@ dependencies = [
  "anyhow",
  "sqlx",
  "urlencoding",
+]
+
+[[package]]
+name = "hive-init"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
 ]
 
 [[package]]

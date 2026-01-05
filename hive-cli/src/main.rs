@@ -11,6 +11,10 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Commands {
+    Init {
+        #[arg(short, long)]
+        path: Option<String>,
+    },
     Introspect {
         #[arg(short, long)]
         connect: Option<String>,
@@ -22,7 +26,13 @@ enum Commands {
 async fn main() {
     let cli = Cli::parse();
 
-    match cli.command { 
+    match cli.command {
+        Commands::Init { path } => {
+            if let Err(e) = hive_init::run(path.as_deref()) {
+                eprintln!("Error: {}", e);
+                std::process::exit(1);
+            }
+        }
         Commands::Introspect { connect, output } => {
             let result = match connect {
                 Some(c) => introspect::run(&c, &output).await,
@@ -31,7 +41,6 @@ async fn main() {
                     std::process::exit(1);
                 }
             };
-            
             if let Err(e) = result {
                 eprintln!("Error: {}", e);
                 std::process::exit(1);

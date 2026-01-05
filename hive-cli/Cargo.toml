@@ -15,5 +15,6 @@ tokio = { version = "1.48", features = ["full"] }
 
 # crates
 hive-db = { path = "../hive-db" }
+hive-init = { path = "../hive-init" }
 hive-introspect = { path = "../hive-introspect" }
 hive-schema = { path = "../hive-schema" }
