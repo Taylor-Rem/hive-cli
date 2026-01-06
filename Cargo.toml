@@ -1,0 +1,12 @@
+[workspace]
+members = [
+    "cli/hive-cli",
+    "cli/hive-codegen",
+    "cli/hive-init",
+    "cli/hive-introspect",
+    "cli/hive-migrate",
+    "cli/hive-schema",
+    "lib/hive-query",
+    "lib/hive-db",
+]
+resolver = "2"

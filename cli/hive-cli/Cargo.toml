@@ -1,0 +1,20 @@
+[package]
+name = "hive-cli"
+description = "Command line interface for hive"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "hive"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.4", features = ["derive"] }
+tokio = { version = "1.48", features = ["full"] }
+
+# crates
+hive-db = { path = "../../lib/hive-db" }
+hive-init = { path = "../hive-init" }
+hive-introspect = { path = "../hive-introspect" }
+hive-schema = { path = "../hive-schema" }
