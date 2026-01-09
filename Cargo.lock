@@ -552,19 +552,15 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "hive-db",
- "hive-init",
- "hive-introspect",
- "hive-schema",
+ "hive-config",
+ "serde",
+ "sqlx",
  "tokio",
+ "toml",
 ]
 
 [[package]]
-name = "hive-codegen"
-version = "0.1.0"
-
-[[package]]
-name = "hive-db"
+name = "hive-config"
 version = "0.1.0"
 dependencies = [
  "anyhow",
@@ -574,42 +570,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "hive-init"
-version = "0.1.0"
-dependencies = [
- "anyhow",
-]
-
-[[package]]
-name = "hive-introspect"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "hive-schema",
- "sqlx",
-]
-
-[[package]]
-name = "hive-migrate"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "hive-schema",
- "sqlx",
-]
-
-[[package]]
 name = "hive-query"
 version = "0.1.0"
-
-[[package]]
-name = "hive-schema"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "serde",
- "toml",
-]
 
 [[package]]
 name = "hkdf"

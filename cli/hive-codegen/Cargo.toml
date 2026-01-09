@@ -1,7 +1,0 @@
-[package]
-name = "hive-codegen"
-description = "Reads project toml and generates rust files/structs for each table in schema"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
