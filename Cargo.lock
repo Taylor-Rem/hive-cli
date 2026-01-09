@@ -568,6 +568,7 @@ name = "hive-db"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "dotenvy",
  "sqlx",
  "urlencoding",
 ]

@@ -14,7 +14,7 @@ clap = { version = "4.4", features = ["derive"] }
 tokio = { version = "1.48", features = ["full"] }
 
 # crates
-hive-db = { path = "../../lib/hive-db" }
+hive-db = { path = "../../lib/hive-config" }
 hive-init = { path = "../hive-init" }
 hive-introspect = { path = "../hive-introspect" }
 hive-schema = { path = "../hive-schema" }

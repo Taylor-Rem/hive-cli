@@ -3,7 +3,7 @@ use anyhow::Result;
 pub async fn run(database_url: &str, output_path: &str) -> Result<()> {
     println!("Connecting to database...");
     
-    // Step 1: Connect to the database (using hive-db)
+    // Step 1: Connect to the database (using hive-config)
     let pool = hive_db::connect(database_url).await?;
     
     println!("Reading database schema...");

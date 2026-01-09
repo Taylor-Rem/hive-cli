@@ -6,5 +6,6 @@ edition = "2024"
 
 [dependencies]
 anyhow = "1.0"
+dotenvy = "0.15"
 sqlx = { version = "0.8.6", features = ["postgres", "runtime-tokio-native-tls", "macros"] }
 urlencoding = "2.1"

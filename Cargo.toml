@@ -7,6 +7,6 @@ members = [
     "cli/hive-migrate",
     "cli/hive-schema",
     "lib/hive-query",
-    "lib/hive-db",
+    "lib/hive-config",
 ]
 resolver = "2"
