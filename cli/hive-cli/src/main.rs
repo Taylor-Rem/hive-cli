@@ -1,9 +1,4 @@
-mod introspect;
-mod init;
-mod migrate;
-mod codegen;
-pub mod structs;
-mod schema;
+mod commands;
 
 use clap::{Parser, Subcommand};
 
@@ -14,6 +9,7 @@ struct Cli {
     #[command(subcommand)]
     command: Commands
 }
+
 #[derive(Subcommand)]
 enum Commands {
     Init {
@@ -27,20 +23,21 @@ enum Commands {
         output: String,
     }
 }
+
 #[tokio::main]
 async fn main() {
     let cli = Cli::parse();
 
     match cli.command {
         Commands::Init { path } => {
-            if let Err(e) = init::run(path.as_deref()) {
+            if let Err(e) = commands::init::run(path.as_deref()) {
                 eprintln!("Error: {}", e);
                 std::process::exit(1);
             }
         }
         Commands::Introspect { connect, output } => {
             let result = match connect {
-                Some(c) => introspect::run(&c, &output).await,
+                Some(c) => commands::introspect::run(&c, &output).await,
                 None => {
                     eprintln!("Error: --connect argument is required");
                     std::process::exit(1);

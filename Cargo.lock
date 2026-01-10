@@ -547,26 +547,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
+name = "hive-capabilities"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "dotenvy",
+ "serde",
+ "sqlx",
+ "toml",
+ "urlencoding",
+]
+
+[[package]]
 name = "hive-cli"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "hive-config",
- "serde",
- "sqlx",
+ "hive-capabilities",
  "tokio",
- "toml",
-]
-
-[[package]]
-name = "hive-config"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "dotenvy",
- "sqlx",
- "urlencoding",
 ]
 
 [[package]]
