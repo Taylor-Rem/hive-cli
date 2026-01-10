@@ -11,18 +11,11 @@ pub fn run(path: Option<&str>) -> anyhow::Result<()> {
 
     // Create schema file
     let schema_file = schema_dir.join("schema.toml");
-    create_file(&schema_file)?;
+    create_file(&schema_file, None)?;
 
     // Create .env file
     let env_file = base.join(".env");
-    create_file(&env_file)?;
-    if !env_file.exists() {
-        fs::write(&env_file, "DATABASE_URL=\n")
-            .with_context(|| format!("Failed to create {:?}", env_file))?;
-        println!("Created .env");
-    } else {
-        println!(".env already exists, skipping");
-    }
+    create_file(&env_file, Some("DATABASE_URL=\n"))?;
 
     // Create models directory
     let models_dir = base.join("models");

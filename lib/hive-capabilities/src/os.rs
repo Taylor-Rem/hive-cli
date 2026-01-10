@@ -8,9 +8,7 @@ pub fn create_directory(path: &Path) -> anyhow::Result<()> {
 }
 
 pub fn create_file(path: &Path, content: Option<&str>) -> Result<()> {
-    if path.exists() {
-        anyhow::bail!("File already exists: {:?}", path);
-    }
+    if path.exists() { anyhow::bail!("File already exists: {:?}", path); }
     let data = content.unwrap_or("");
     fs::write(path, data)?;
     Ok(())
