@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "cli/hive-cli",
-    "lib/hive-config",
+    "lib/hive-capabilities",
     "lib/hive-query",
 ]
 resolver = "2"

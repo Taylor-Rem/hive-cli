@@ -3,28 +3,7 @@ use anyhow::Result;
 use sqlx::{PgPool, Row};
 use crate::structs::{DbColumn, DbForeignKey, DbIndex, DbSchema, DbTable};
 
-pub async fn run(database_url: &str, output_path: &str) -> Result<()> {
-    println!("Connecting to database...");
-    
-    // Step 1: Connect to the database (using hive-config)
-    let pool = hive_config::connect(database_url).await?;
-    
-    println!("Reading database schema...");
-    
-    // Step 2: Read the database schema (using hive-introspect)
-    let schema = read_db_schema(&pool).await?;
-    
-    println!("Writing schema to {}...", output_path);
-    
-    // Step 3: Write the schema to a TOML file
-    crate::schema::write_schema_toml(schema, output_path)?;
-    
-    println!("✓ Schema file generated successfully!");
-    
-    Ok(())
-}
-
-async fn read_db_schema(db: &PgPool) -> Result<DbSchema> {
+pub async fn read_db_schema(db: &PgPool) -> Result<DbSchema> {
     // Step 1: Get all columns
     let column_rows = sqlx::query(
         r#"
@@ -39,7 +18,7 @@ async fn read_db_schema(db: &PgPool) -> Result<DbSchema> {
         ORDER BY table_name, ordinal_position
         "#
     )
-        .fetch_all(db)  // Changed from db.pool to db
+        .fetch_all(db)
         .await?;
 
     let mut tables: HashMap<String, DbTable> = HashMap::new();
@@ -83,7 +62,7 @@ async fn read_db_schema(db: &PgPool) -> Result<DbSchema> {
         ORDER BY tc.table_name, kcu.column_name
         "#
     )
-        .fetch_all(db)  // Changed from db.pool to db
+        .fetch_all(db)
         .await?;
 
     for row in fk_rows {
@@ -118,7 +97,7 @@ async fn read_db_schema(db: &PgPool) -> Result<DbSchema> {
         ORDER BY t.relname, i.relname, a.attnum
         "#
     )
-        .fetch_all(db)  // Changed from db.pool to db
+        .fetch_all(db)
         .await?;
 
     // Group index columns by index name
