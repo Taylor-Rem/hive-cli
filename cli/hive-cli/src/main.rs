@@ -1,4 +1,9 @@
 mod introspect;
+mod init;
+mod migrate;
+mod codegen;
+pub mod structs;
+mod schema;
 
 use clap::{Parser, Subcommand};
 
@@ -28,7 +33,7 @@ async fn main() {
 
     match cli.command {
         Commands::Init { path } => {
-            if let Err(e) = hive_init::run(path.as_deref()) {
+            if let Err(e) = init::run(path.as_deref()) {
                 eprintln!("Error: {}", e);
                 std::process::exit(1);
             }

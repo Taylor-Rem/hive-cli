@@ -1,6 +1,6 @@
 [package]
-name = "hive-db"
-description = "Establishes database connection"
+name = "hive-config"
+description = "Configuration and database connection for hive"
 version = "0.1.0"
 edition = "2024"
 

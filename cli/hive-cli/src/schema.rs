@@ -1,12 +1,28 @@
 use anyhow::Result;
+use std::collections::HashMap;
 use std::fs;
 
-use crate::structs::{
-    DbSchema,
-    DbTable,
-    TomlSchema,
-    TomlTable
-};
+use crate::structs::{DbSchema, DbTable, TomlSchema, TomlTable};
+
+fn read_schema_toml(path: &str) -> Result<DbSchema> {
+    let toml_str = fs::read_to_string(path)?;
+    let toml_schema: TomlSchema = toml::from_str(&toml_str)?;
+
+    let mut tables = HashMap::new();
+
+    for toml_table in toml_schema.table {
+        tables.insert(
+            toml_table.name,
+            DbTable {
+                columns: toml_table.column,
+                foreign_keys: toml_table.foreign_key,
+                indexes: toml_table.index,
+            }
+        );
+    }
+
+    Ok(DbSchema { tables })
+}
 
 pub fn write_schema_toml(schema: DbSchema, path: &str) -> Result<()> {
     let mut tables: Vec<TomlTable> = schema
