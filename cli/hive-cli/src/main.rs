@@ -13,40 +13,35 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     Init {
-        #[arg(short, long)]
-        path: Option<String>,
+        #[arg(short, long, default_value = ".")]
+        path: String
     },
     Introspect {
         #[arg(short, long)]
-        connect: Option<String>,
+        db_url: Option<String>,
         #[arg(short, long, default_value = "./schema/schema.toml")]
-        output: String,
+        output: String
+    },
+    Migrate {
+        #[arg(short, long)]
+        db_url: Option<String>,
+        #[arg(short, long, default_value = "./schema/schema.toml")]
+        schema_path: String
     }
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Init { path } => {
-            if let Err(e) = commands::init::run(path.as_deref()) {
-                eprintln!("Error: {}", e);
-                std::process::exit(1);
-            }
+        Commands::Init { path } => { commands::init::run(&path)?; }
+        Commands::Introspect { db_url, output } => {
+            commands::introspect::run(db_url.as_deref(), output).await?;
         }
-        Commands::Introspect { connect, output } => {
-            let result = match connect {
-                Some(c) => commands::introspect::run(&c, &output).await,
-                None => {
-                    eprintln!("Error: --connect argument is required");
-                    std::process::exit(1);
-                }
-            };
-            if let Err(e) = result {
-                eprintln!("Error: {}", e);
-                std::process::exit(1);
-            }
+        Commands::Migrate { db_url, schema_path } => {
+            commands::migrate::run(db_url.as_deref(), &schema_path).await?;
         }
     }
+    Ok(())
 }

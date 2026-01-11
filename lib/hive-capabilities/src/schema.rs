@@ -4,7 +4,7 @@ use std::fs;
 
 use crate::structs::{DbSchema, DbTable, TomlSchema, TomlTable};
 
-fn read_schema_toml(path: &str) -> Result<DbSchema> {
+pub fn read_schema_toml(path: &str) -> Result<DbSchema> {
     let toml_str = fs::read_to_string(path)?;
     let toml_schema: TomlSchema = toml::from_str(&toml_str)?;
 
