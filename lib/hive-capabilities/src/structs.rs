@@ -1,19 +1,19 @@
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct DbSchema {
     pub tables: HashMap<String, DbTable>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct DbTable {
     pub columns: Vec<DbColumn>,
     pub foreign_keys: Vec<DbForeignKey>,
     pub indexes: Vec<DbIndex>
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DbColumn {
     pub name: String,
     pub data_type: String,
@@ -21,14 +21,14 @@ pub struct DbColumn {
     pub default: Option<String>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DbForeignKey {
     pub column: String,
     pub referenced_table: String,
     pub referenced_column: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DbIndex {
     pub name: String,
     pub columns: Vec<String>,
@@ -45,8 +45,8 @@ pub struct TomlSchema {
 pub struct TomlTable {
     pub name: String,
     pub column: Vec<DbColumn>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub foreign_key: Vec<DbForeignKey>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub index: Vec<DbIndex>
 }
