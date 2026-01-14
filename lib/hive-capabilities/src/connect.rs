@@ -1,11 +1,16 @@
 use sqlx::{PgPool, postgres::PgPoolOptions};
 use anyhow::{Result};
+use crate::retrieve_from_env;
 
 pub type DbPool = PgPool;
 
-pub async fn connect(database_url: &str) -> Result<DbPool> {
+pub async fn connect(url: Option<&str>) -> Result<DbPool> {
+    let database_url = match url {
+        Some(u) => u.to_string(),
+        None => retrieve_from_env("DATABASE_URL")?,
+    };
     // Encode the password if the URL contains special characters
-    let encoded_url = encode_password_in_url(database_url)?;
+    let encoded_url = encode_password_in_url(&database_url)?;
     
     let pool = PgPoolOptions::new()
         .max_connections(5)

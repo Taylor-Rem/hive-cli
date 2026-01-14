@@ -1,19 +1,14 @@
 use anyhow::Result;
-use hive_capabilities::{connect, read_schema_toml, write_schema_to_db, retrieve_from_env};
+use hive_capabilities::{connect, Schema};
 
 pub async fn run(url: Option<&str>, schema_path: &str) -> Result<()> {
-    let schema = read_schema_toml(&schema_path)?;
-
-    let database_url = match url {
-        Some(u) => u.to_string(),
-        None => retrieve_from_env("DATABASE_URL")?,
-    };
+    let schema = Schema::from_toml_file(schema_path)?;
 
     println!("Connecting to database...");
-    let pool = connect(&database_url).await?;
+    let pool = connect(url).await?;
 
     println!("Applying schema migrations...");
-    let migrations = write_schema_to_db(&pool, schema).await?;
+    let migrations = schema.apply_to_db(&pool).await?;
 
     if migrations.is_empty() {
         println!("No migrations needed.");
