@@ -27,6 +27,12 @@ enum Commands {
         db_url: Option<String>,
         #[arg(short, long, default_value = "./schema/schema.toml")]
         schema_path: String
+    },
+    Codegen {
+        #[arg(short, long, default_value = "./schema/schema.toml")]
+        schema_path: String,
+        #[arg(short, long, default_value = "./models")]
+        output: String
     }
 }
 
@@ -41,6 +47,9 @@ async fn main() -> anyhow::Result<()> {
         }
         Commands::Migrate { db_url, schema_path } => {
             commands::migrate::run(db_url.as_deref(), &schema_path).await?;
+        }
+        Commands::Codegen { schema_path, output } => {
+            commands::codegen::run(&schema_path, &output).await?;
         }
     }
     Ok(())
